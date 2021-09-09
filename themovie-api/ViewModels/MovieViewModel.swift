@@ -15,12 +15,14 @@ class MovieViewModel {
     }
     
     private func handle(_ movie: Movie?, _ error: Error?) {
-        if let e = error {
-            completion?(nil, e)
-        }
-        
-        if let movie = movie {
-            completion?(movie, nil)
+        DispatchQueue.main.async {
+            if let e = error {
+                self.completion?(nil, e)
+            }
+            
+            if let movie = movie {
+                self.completion?(movie, nil)
+            }
         }
     }
 }
