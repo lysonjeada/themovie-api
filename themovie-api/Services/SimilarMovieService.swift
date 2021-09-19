@@ -2,10 +2,10 @@ import Foundation
 
 private let key: String = "e2ce3d7d2083c20850a43cc4fcffe3b2"
 private let movieId: Int = 22803
-private let apiURL = "https://api.themoviedb.org/3/movie/\(movieId)?api_key=\(key)&language=pt-BR"
+private let apiURL = "https://api.themoviedb.org/3/movie/\(movieId)/similar?api_key=\(key)&language=pt-BR&page=1"
 
-class MovieService {
-    func fetchMovie(completion: @escaping (Movie?, Error?) -> Void) {
+class SimilarMovieService {
+    func fetchSimilarMovie(completion: @escaping (SimilarMovie?, Error?) -> Void) {
         guard let api = URL(string: apiURL) else {
             return
         }
@@ -18,7 +18,7 @@ class MovieService {
             
             do {
                 let decoder = JSONDecoder()
-                let decoded = try decoder.decode(Movie.self, from: jsonData)
+                let decoded = try decoder.decode(SimilarMovie.self, from: jsonData)
                 
                 completion(decoded, nil)
             } catch let error {
