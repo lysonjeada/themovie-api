@@ -5,7 +5,7 @@ import SDWebImage
 class MovieViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var movie = [Movie]()
-    var viewModel: MovieViewModel!
+    var viewModel: MovieViewModel?
     var similarMovieViewModel = SimilarMovieViewModel()
     var similarMovie: [Result]?
     
@@ -45,23 +45,26 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         if indexPath.row == 0 {
             let cell = HeaderTableViewCell()
             
-            viewModel.loadContacts { movie, error in
-                let url = URL.init(string: "https://image.tmdb.org/t/p/w500\(movie!.posterPath)")
-                cell.image.sd_setImage(with: url, completed: nil)
-                cell.backgroundColor = .black
-                cell.titleLabel.attributedText = NSAttributedString(string: movie!.title)
-                cell.voteCountLabel.attributedText = NSAttributedString(string: String(movie!.voteCount) + " likes")
+            viewModel?.loadContacts { movie, error in
+                if let movie = movie {
+                    let url = URL.init(string: "https://image.tmdb.org/t/p/w500\(movie.posterPath)")
+                    cell.image.sd_setImage(with: url, completed: nil)
+                    cell.backgroundColor = .black
+                    cell.titleLabel.attributedText = NSAttributedString(string: movie.title)
+                    cell.voteCountLabel.attributedText = NSAttributedString(string: String(movie.voteCount) + " likes")
+                }
             }
             return cell
         }
         
         let cell = SimilarMoviesTableViewCell()
-        cell.titleLabel.text = similarMovie?[indexPath.row - 1].title
-        cell.date.text = similarMovie?[indexPath.row - 1].date
-        
-        let url = URL.init(string: "https://image.tmdb.org/t/p/w500\(similarMovie![indexPath.row - 1].posterPath)")
-        cell.image.sd_setImage(with: url, completed: nil)
-        
+        if let similarMovie = similarMovie {
+            cell.titleLabel.text = similarMovie[indexPath.row - 1].title
+            cell.date.text = similarMovie[indexPath.row - 1].date
+            
+            let url = URL.init(string: "https://image.tmdb.org/t/p/w500\(similarMovie[indexPath.row - 1].posterPath)")
+            cell.image.sd_setImage(with: url, completed: nil)
+        }
         return cell
     }
     

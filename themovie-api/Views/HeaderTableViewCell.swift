@@ -5,7 +5,7 @@ import SnapKit
 class HeaderTableViewCell: UITableViewCell {
     
     var movie = [Movie]()
-    var viewModel: MovieViewModel!
+    var viewModel: MovieViewModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

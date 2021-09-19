@@ -4,7 +4,7 @@ import UIKit
 class SimilarMoviesTableViewCell: UITableViewCell {
     
     var movie = [SimilarMovie]()
-    var viewModel: SimilarMovieViewModel!
+    var viewModel: SimilarMovieViewModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
